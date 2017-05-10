@@ -17,6 +17,7 @@ Some tools to deploy the scripts have also been included into the module.
 * [Installation](#install)
 * [Functions](#functions)
 * [Usage Examples](#usage)
+* [Versions and Updates](#version)
 
 ## <a name=install>Installation</a>
 
@@ -63,6 +64,23 @@ Scaffolds settings and scripts for a build process.
 |----------|----------|-----------|---------------------|----------------------------------------------------------------|
 | `Module` | *String* | True      |                     | The path to a Module.                                          |
 
+It will add some files to the module project directory. The updated structure will look like:
+
+```
+- ModuleName
+-- ModuleName
+--- en-US
+---- about_ModuleName.help.txt
+--- Private
+--- Public
+--- ModuleName.psd1
+--- ModuleName.psm1
+- .gitignore
+- build_utils.ps1
+- ModuleName.build.ps1
+- ModuleName.settings.ps1
+- README.md
+```
 
 **`New-PSFunction`**
 
@@ -90,6 +108,19 @@ created at your current location in the file system.
 | `Description`   | *String* | False     |                | Description of the module.                                           |
 | `BuildPipeline` | *Switch* | False     |                | Adds a build pipeline inside the function with `New-PSBuildPipeline` |
 
+
+It will create the following folders and files.
+
+```
+- ModuleName
+-- ModuleName
+--- en-US
+---- about_ModuleName.help.txt
+--- Private
+--- Public
+-- ModuleName.psd1
+-- ModuleName.psm1
+```
 
 **`New-PSModuleInstallScript`**
 
@@ -121,3 +152,33 @@ Function to scaffold the structure of a test file for Pester tests.
 
 
 ## <a name=usage>Usage Examples</a>
+
+To create a module, in your documents folder
+
+```
+cd ~\Documents\Projects
+New-PSModule -Name PSTools -Author 'Person'
+
+# Or
+
+New-PSModule -Name PSTools -Path C:\Users\UserA\Documents\Projects -Author 'Person' -Description 'A tool set'
+
+# Or
+
+New-PSModule PSTools . Person
+```
+
+All these examples create the PowerShell Module directory structure in the directory:
+`C:\Users\UserA\Documents\Projects\PSTools`.
+
+If you want to add the Build Pipline at the project creation. Use the switch `-BuildPipeline` like so:
+
+`New-PSModule -Name PSTools -Author 'Person' -BuildPipeline`
+
+It works with all the examples shown above.
+
+## <a name=version>Versions and Updates</a>
+
+### v1.0.0
+
+* First release.
