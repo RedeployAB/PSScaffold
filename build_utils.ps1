@@ -1,6 +1,8 @@
 ﻿<#
 .SYNOPSIS
     Published a PowerShell Module to a network share.
+.NOTES
+    Written by Michael Willis xainey@github - https://github.com/xainey.
 #>
 function Publish-SMBModule {
     [CmdletBinding()]
