@@ -36,7 +36,7 @@ function New-PSModule {
         $Description,
         [Parameter(Mandatory = $False)]
         [switch]
-        $WithBuildPipeline
+        $BuildPipeline
     )
 
     begin {
@@ -94,7 +94,7 @@ function New-PSModule {
 
         # Content for build and build settings.
 
-        if ($WithBuildPipeline) {
+        if ($BuildPipeline) {
             
             New-PSBuildPipeline -Module "$Path\$Name"
         }
