@@ -6,4 +6,6 @@ artifacts/*
 PSTestReport
 PSTestReport/*
 
+PSScaffold.settings.ps1
+
 api-keys.ps1
