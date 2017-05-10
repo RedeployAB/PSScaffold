@@ -95,6 +95,6 @@ task Publish BeforePublish, {
         NugetApiKey = $psGalleryAPIkey
     }
 
-    Publish-Module $moduleInfo
+    Publish-Module @moduleInfo
 
 }, AfterPublish
