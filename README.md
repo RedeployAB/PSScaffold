@@ -4,13 +4,14 @@ This module contains functions to scaffold the structures of PowerShell modules 
 The structure of the resulting module file structure is inspired by:
 [Rambling Cookie Monster's blog post](http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/)
 
-The build pipeline was inspired by (and the contents of `build_utils.ps1`):
+The build pipeline, tasks and structure was inspired by (and the contents of `build_utils.ps1`):
 [xainey/Michael Willis blog post](https://xainey.github.io/2017/powershell-module-pipeline/)
+
+Michael Willis is also responsible for the module `PSTestReport` that the build process downloads during it's build process.
 
 We've consolidated this to four functions that creates the needed files in a good and easy to understand
 file structure.
 
-Some tools to deploy the scripts have also been included into the module.
 
 **Content**
 
@@ -30,6 +31,7 @@ It's strongly recommended that you have the following PowerShell modules install
 * InvokeBuild
 * Pester
 * PSScriptAnalyzer
+* PSTestReport (downloaded from Xainyes GitHub during build)
 
 **InvokeBuild** is used as a task runner, and runs the entire build and eventual deploy process. It's needed to run the build. **PSSCriptAnalyzer** provides functions to analyze and recommend changes to your code. **Pester** (included in newer versions of PowerShell) is the testing framework of choice for many PowerShell developers.
 
