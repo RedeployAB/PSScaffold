@@ -3,10 +3,10 @@
     Scaffolds new module structure.
 .DESCRIPTION
     Function to initialize and scaffolc the structure for a PowerShell script/function module.
+.PARAMETER Name
+    <String> The name of the module.
 .PARAMETER Path
     <String> Path to where the module should be created.
-.PARAMETER ModuleName
-    <String> The name of the module.
 .PARAMETER Author
     <String> Name of the author.
 .PARAMETER Description

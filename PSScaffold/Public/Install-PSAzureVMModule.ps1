@@ -1,6 +1,48 @@
 ﻿<#
 .SYNOPSIS
+    A function to install PowerShell Modules from a custom PS Repository on an Azure ARM Virtual Machine.
 .DESCRIPTION
+    A function to isntall PowerShell Modules from a custom PS Repository on an Azure ARM Virtual Machine.
+    Assuming that some form of PowerShell Repository is available and has modules.
+
+    See: https://urltoinstructions.
+.PARAMETER Name
+    <String> The name of the module. To be used in Script generation and to keep track of what names to be used when deploying.
+.PARAMETER SubscriptionId
+    <String> The GUID of an Azure Subscription.
+.PARAMETER ResourceGroupName
+    <String> The name of the Resource Group that the Virtual Machine is part of.
+.PARAMETER VMName
+    <String> The name of the Virtual Machine.
+.PARAMETER FileName
+    <String> The name of the installation script file. Used to keep track when generating install script, or what the existing script is
+    named on the Storage Account.
+.PARAMETER Argument
+    <String> Additional arguments. If an installl script takes arguments, specify them as a string.
+    $arguments = "-User username -Group group"
+    
+    If it's an array
+
+    $arguments = "-User user1,user2 -Group group"
+
+.PARAMETER StorageAccountName
+    <String> The name of the Storage Account that will contain the script.
+.PARAMETER Container
+    <String> The container where the script will be located. Used together with 'StorageAccountName'.
+.PARAMETER RepositoryName
+    <String> The name of the Repository. Used in combination with 'UploadScript' so it can determine on what PSRepository
+    to use.
+.PARAMETER RepositoryPath
+    <String> The path to the Repository. Used in combination with 'UploadScript' so it can determine on what PSRepository
+    path to use.
+.PARAMETER UploadScript
+    <Switch> This parameter is used so an install script can be generated during runtime. The script will be generated and uploaded.
+    It will need 'StorageAccountName', 'Container', 'RepositoryName' and 'RepositoryPath' to be correct.
+.PARAMETER FileUrl
+    <String> A URI to a script file in raw format. It is stand alone and should not be used with the parameters that are
+    associated with StorageAccount and Repository.
+.NOTES
+    Written by Karl Wallenius, Redeploy AB.
 #>
 function Install-PSAzureVMModule {
     [CmdletBinding()]

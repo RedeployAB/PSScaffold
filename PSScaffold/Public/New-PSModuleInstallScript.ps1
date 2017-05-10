@@ -1,6 +1,24 @@
 ﻿<#
 .SYNOPSIS
+    A function to generate an install script for PowerShell modules.
 .DESCRIPTION
+    A function to generate an install script for PowerShell modules. Assuming they 
+    are available to the host and in a PS Repository (NuGet Feed, Fileshare). It can also
+    be used to generate a template that is modified afterwards to fit other environments.
+.PARAMETER RepositoryName
+    <String> Name of the PSRepository that the install script should register during the install process.
+.PARAMETER RepositoryPath
+    <String> The network path to the PSRepository that the install script should register during the install process.
+.PARAMETER Module
+    <String> The name of the module. Used to generate what module to download.
+.PARAMETER OutputPath
+    <String> The output path of the install script. If no parameter is used it will be created in the current directory.
+.PARAMETER StorageAccountName
+    <String> Name of the Storage Account. Only used if the Repository is on an Azure Fileshare.
+.PARAMETER StorageAccountKey
+    <String> Access key to the Storage Account. Only used if the Repository is on an Azure Fileshare.
+.Notes
+    Made as a function in a module by Karl Wallenius, Redeploy AB.
 #>
 function New-PSModuleInstallScript {
     [CmdletBinding()]
