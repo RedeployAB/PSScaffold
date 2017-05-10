@@ -2,6 +2,8 @@ $BuildUtilsFileContent = @"
 <#
 .SYNOPSIS
     Published a PowerShell Module to a network share.
+.NOTES
+    Written by Michael Willis xainey@github - htts://github.com/xainey.
 #>
 function Publish-SMBModule {
     [CmdletBinding()]
