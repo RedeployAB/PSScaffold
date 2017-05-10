@@ -14,10 +14,36 @@ Some tools to deploy the scripts have also been included into the module.
 
 **Content**
 
+* [Introduction](#intro)
 * [Installation](#install)
 * [Functions](#functions)
 * [Usage Examples](#usage)
 * [Versions and Updates](#version)
+
+
+## <a name=intro>Introduction</a>
+
+**Prerequisites**
+
+It's strongly recommended that you have the following PowerShell modules installed:
+
+* InvokeBuild
+* Pester
+* PSScriptAnalyzer
+
+**InvokeBuild** is used as a task runner, and runs the entire build and eventual deploy process. It's needed to run the build. **PSSCriptAnalyzer** provides functions to analyze and recommend changes to your code. **Pester** (included in newer versions of PowerShell) is the testing framework of choice for many PowerShell developers.
+
+For more information about PowerShell Module structure:
+[Rambling Cookie Monsters take on PowerShell modules](http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/)
+
+For more information about the PowerShell Build Pipeline and how to use it:
+[Michael Willis@xaines great article](https://xainey.github.io/2017/powershell-module-pipeline/)
+
+To get started with unit testing with Pester (a very big subject in itself):
+[PowerShell Magazines introduction](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/)
+
+To make best use of `New-PSModuleInstallScript` and `Install-PSAzureVMModule` i really recommend to
+make them part of the build process to deploy them to the server when the build finishes and is successful.
 
 ## <a name=install>Installation</a>
 
@@ -201,6 +227,9 @@ New-PSBuildPipeline .
 New-PSBuildpipeline -Module C:\Users\UserA\Documents\Projects\ExistingModule
 ```
 
+Don't forget to modify `ModuleName.settings.ps1` to meet your deployment needs. Also 
+take a glance at `ModuleName.build.ps1` to see if the build process is to your satisfaction.
+
 **New-PSFunction**
 
 To create a new function (can of course be done manually, or through your IDE if it supports extension):
@@ -254,11 +283,70 @@ This will determine what subdirectory the new function will be placed
 
 **New-PSModuleInstallScript**
 
-*On the way*
+To generate install scripts:
+
+```
+# Generates a basic install script hat installs the module form a custom repository.
+
+New-PSModuleInstallScript -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -Module PSTools
+
+# Generate a script that in the script also maps the network drive needed for the PSRepository
+# that is located in an Azure File Share
+
+New-PSModuleInstallScript -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -Module PSTools -StorageAccountName customstorage -StorageAccountKey longkeystring 
+```
 
 **Install-AzureVMModule**
 
-*On the way*
+Installing a PowerShell module from your own localhost (or other machine) to a target
+Azure Virtual Machine (ARM). This is best used when automated in a build script of sorts,
+or in a task with `Invoke-Build`.
+
+```
+# To Install the module on the VM with an auto-generated installation script.
+
+Install-PSAzureVMModule -Name PSTools -SubscriptionId GUID -ResorceGroupName rg1 -VMName vm1 -FileName install-pstools.ps1 -StorageAccountName customstorage -Container scripts -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -UploadScript 
+
+# Or more readable
+$params = @{
+    Name = "PSTools"
+    SubscriptionId = "GUID"
+    ResourceGroupName = "rg1"
+    VMName = "vm1"
+    FileName = "install-pstools.ps1"
+    StorageAccountName = "customstorage"
+    Container = "scripts"
+    RepositoryName = "CustomRepository"
+    RepositoryPath = "\\path\to\repo"
+}
+
+Install-PSAzureVMModule @params -UploadScript
+
+# To install a module with an existing script file in the storage account.
+$params = @{
+    Name = "PSTools"
+    SubscriptionId = "GUID"
+    ResourceGroupName = "rg1"
+    VMName = "vm1"
+    FileName = "<existing-script-name>.ps1"
+    StorageAccountName = "customstorage"
+    Container = "scripts"
+}
+
+Install-PSAzureVMModule @params
+
+# To install from a URI (HAS NOT BEEN VERIFIED YET)
+$params = @{
+    Name = "PSTools"
+    SubscriptionId = "GUID"
+    ResourceGroupName = "rg1"
+    VMName = "vm1"
+    FileName = "<existing-script-name>.ps1"
+    FileUri = "http://urltofile/<existing-script-name>.ps1"
+}
+
+Install-PSAzureVMModule @params
+```
 
 
 ## <a name=version>Versions and Updates</a>
