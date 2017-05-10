@@ -1,0 +1,9 @@
+﻿Thumbs.db
+Desktop.ini
+
+artifacts
+artifacts/*
+PSTestReport
+PSTestReport/*
+
+api-keys.ps1
