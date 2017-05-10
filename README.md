@@ -36,6 +36,9 @@ To include it in other projects incorporate this in the module functions:
 This function is used to deploy a module on an Azure VM. For this function to work an installation script must exist.
 Either an installation script can be located in an Azure Storage account, or directly through an URI.
 
+Use the switch `UploadScript` to generate an upload script that is uploaded to the specified Storage Account. Otherwise
+you will have to generate this manually, and upload it to the specified container, before using `Install-PSAzureVMModule`.
+
 | Param                | Type     | Mandatory | Allowed Values |                                                                 |
 |----------------------|----------|-----------|----------------|-----------------------------------------------------------------|
 | `Name`               | *String* | True      |                | Name of the module.                                             |
@@ -58,37 +61,43 @@ Scaffolds settings and scripts for a build process.
 
 | Param    | Type     | Mandatory | Allowed Values      |                                                                |
 |----------|----------|-----------|---------------------|----------------------------------------------------------------|
-| `Module` | *String* | True      |                     | The name or path of/to a Module.                               |
+| `Module` | *String* | True      |                     | The path to a Module.                                          |
 
 
 **`New-PSFunction`**
 
-Creates a new function file and scaffolds base structure, to the target module.
+Creates a new function file and scaffolds base structure, to the target module. If `Module` isn't specified, it assumes
+that the command prompt is in the root directory of the project. 
 
 | Param        | Type     | Mandatory | Allowed Values      |                                                                |
 |--------------|----------|-----------|---------------------|----------------------------------------------------------------|
-| `Module`     | *String* | True      |                     | The name of a module, or the parent path of a module manifest. |
 | `Name`       | *String* | True      |                     | The name of the function to create.                            |
+| `Module`     | *String* | False     |                     | The path to the module project root directory.                 |
 | `Scope`      | *String* | False     | *Private*, *Public* | The scope of the function. Allowed values: Private and Public. Default: Public. |
 | `PesterTest` | *Switch* | False     |                     | If used, a Pester Test file will be created in the module      |
 
 
 **`New-PSModule`**
 
-Function to initialize and scaffolc the structure for a PowerShell script/function module.
+Function to initialize and scaffolc the structure for a PowerShell script/function module. If no path is specified. It's
+created at your current location in the file system.
 
-| Param         | Type     | Mandatory | Allowed Values |                                                                |
-|---------------|----------|-----------|----------------|----------------------------------------------------------------|
-| `Path`        | *String* | True      |                | Path to where the module should be created.                    |
-| `ModuleName`  | *String* | True      |                | The name of the module.                                        |
-| `Author`      | *String* | True      |                | Name of the author.                                            |
-| `Description` | *String* | True      |                | Description of the module.                                     |
+| Param           | Type     | Mandatory | Allowed Values |                                                                      |
+|-----------------|----------|-----------|----------------|----------------------------------------------------------------------|
+| `Name`          | *String* | True      |                | The name of the module.                                              |
+| `Path`          | *String* | False     |                | Path to where the module should be created.                          |
+| `Author`        | *String* | True      |                | Name of the author.                                                  |
+| `Description`   | *String* | False     |                | Description of the module.                                           |
+| `BuildPipeline` | *Switch* | False     |                | Adds a build pipeline inside the function with `New-PSBuildPipeline` |
 
 
 **`New-PSModuleInstallScript`**
 
 Function to generate a module installation script. At this writing it only supports scripts targeted at Repositories that
 are made available through `Register-PSRepository`. This might change in a future release.
+
+If `StorageAccountName` is left empty. It will not add the mapping of the network drive inside the script. This is 
+usefule if you just want to generate a script template and modify it afterwards.
 
 | Param                | Type     | Mandatory | Allowed Values |                                                               |
 |----------------------|----------|-----------|----------------|---------------------------------------------------------------|
@@ -106,8 +115,8 @@ Function to scaffold the structure of a test file for Pester tests.
 
 | Param        | Type     | Mandatory | Allowed Values      |                                                                |
 |--------------|----------|-----------|---------------------|----------------------------------------------------------------|
-| `Module`     | *String* | True      |                     | The name of a module, or the parent path of a module manifest. |
 | `Name`       | *String* | True      |                     | The name of the function to create a test for.                 |
+| `Module`     | *String* | True      |                     | The path to the module project root directory.                 |
 | `Scope`      | *String* | False     | *Private*, *Public* | The scope of the function. Allowed values: Private and Public. Default: Public. |
 
 
