@@ -102,7 +102,7 @@ InModuleScope "PSScaffold" {
         It "Should create the project with a build pipline if switch is used" {
             Set-Location $testPath
 
-            New-PSModule -Name $testName -Path $testPath -Author 'Test' -Description 'Test' -WithBuildPipeline
+            New-PSModule -Name $testName -Path $testPath -Author 'Test' -Description 'Test' -BuildPipeline
 
             Set-Location $begin
 
