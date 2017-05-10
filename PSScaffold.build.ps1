@@ -4,6 +4,8 @@
 # Include: build_utils.
 . './build_utils.ps1'
 
+. './api-keys.ps1'
+
 #Synopsis: Run/Publish Tests and Fail Build on Error.
 task Test BeforeTest, RunTests, ConfirmTestsPassed, AfterTest
 
@@ -85,17 +87,14 @@ task ConfirmTestsPassed {
     assert($OverallCoverage -gt $PercentCompliance) ('A Code Coverage of "{0}" does not meet the build requirement of "{1}"' -f $overallCoverage, $PercentCompliance)
 }
 
-#Synopsis: Publish to SMB File Share.
+#Synopsis: Publish to PSGallery.
 task Publish BeforePublish, {
     
     $moduleInfo = @{
-        RepositoryName = $Settings.SMBRepositoryName
-        RepositoryPath = $Settings.SMBRepositoryPath
-        ModuleName = $ModuleName
-        ModulePath = "$ModulePath\$ModuleName.psd1"
-        BuildNumber = $BuildNumber
+        Path = $ModulePath
+        NugetApiKey = $psGalleryAPIkey
     }
 
-    Publish-SMBModule @moduleInfo -Verbose
+    Publish-Module $moduleInfo
 
 }, AfterPublish
