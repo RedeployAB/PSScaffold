@@ -130,6 +130,9 @@ are made available through `Register-PSRepository`. This might change in a futur
 If `StorageAccountName` is left empty. It will not add the mapping of the network drive inside the script. This is 
 usefule if you just want to generate a script template and modify it afterwards.
 
+The script is supposed to be run on the target server, and do the necessary steps to install the module with
+`Install-Module` from the specified **PSRepository** (which can very depending on your environment).
+
 | Param                | Type     | Mandatory | Allowed Values |                                                               |
 |----------------------|----------|-----------|----------------|---------------------------------------------------------------|
 | `RepositoryName`     | *String* | True      |                | The name of the PowerShell repository.                        |
@@ -153,7 +156,9 @@ Function to scaffold the structure of a test file for Pester tests.
 
 ## <a name=usage>Usage Examples</a>
 
-To create a module, in your documents folder
+**New-PSModule**
+
+To create a module, in your documents folder:
 
 ```
 cd ~\Documents\Projects
@@ -176,6 +181,85 @@ If you want to add the Build Pipline at the project creation. Use the switch `-B
 `New-PSModule -Name PSTools -Author 'Person' -BuildPipeline`
 
 It works with all the examples shown above.
+
+
+**New-PSBuildPipeline**
+
+To create the needed files for a build pipeline:
+
+```
+cd ~\Documents\Projects\ExistingModule
+New-PSBuildPipeline
+
+# Or
+
+cd ~\Documents\Projects\ExistingModule
+New-PSBuildPipeline .
+
+# Or
+
+New-PSBuildpipeline -Module C:\Users\UserA\Documents\Projects\ExistingModule
+```
+
+**New-PSFunction**
+
+To create a new function (can of course be done manually, or through your IDE if it supports extension):
+
+```
+cd ~\Documents\Projects\ExistingModule
+New-PSFunction -Name Get-Stuff 
+
+# Or
+
+cd ~\Documents\Projects\ExistingModule
+New-PSFunction -Name Get-Stuff .
+
+# Or
+
+New-PSFunction -Name Get-Stuff -Module C:\Users\UserA\Documents\Projects\ExistingModule
+
+# To also create a Pester test file for the function
+
+New-PSFunction -Name Get-Stuff -PesterTest
+```
+
+The function takes a parameter `Scope` that allows `Public` and `Private`.
+This will determine what subdirectory the new function will be placed (also the test file in the test subdirectory structure).
+
+Functions in the `Public` scope is exposed and available when the module is imported. `Private` is supposed for internal
+helper functions that your `Public` functions uses. The `.psm1` file act as a loader that loads and exposes the functions.
+
+
+**New-PSPesterTest**
+
+To create a new Pester tes for a function (can of course be done manually, or through your IDE if it supports extension):
+
+```
+cd ~\Documents\Projects\ExistingModule
+New-PSPesterTest -Name Get-Stuff 
+
+# Or
+
+cd ~\Documents\Projects\ExistingModule
+New-PSPesterTest -Name Get-Stuff .
+
+# Or
+
+New-PSPesterTest -Name Get-Stuff -Module C:\Users\UserA\Documents\Projects\ExistingModule
+```
+
+The function takes a parameter `Scope` that allows `Public` and `Private`.
+This will determine what subdirectory the new function will be placed
+
+
+**New-PSModuleInstallScript**
+
+*On the way*
+
+**Install-AzureVMModule**
+
+*On the way*
+
 
 ## <a name=version>Versions and Updates</a>
 
