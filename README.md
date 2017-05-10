@@ -4,7 +4,7 @@ This module contains functions to scaffold the structures of PowerShell modules 
 The structure of the resulting module file structure is inspired by:
 [Rambling Cookie Monster's blog post](http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/)
 
-The build pipeline was inspired by:
+The build pipeline was inspired by (and the contents of `build_utils.ps1`):
 [xainey/Michael Willis blog post](https://xainey.github.io/2017/powershell-module-pipeline/)
 
 We've consolidated this to four functions that creates the needed files in a good and easy to understand
