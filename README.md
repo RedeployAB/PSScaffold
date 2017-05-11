@@ -12,7 +12,7 @@ Michael Willis is also responsible for the module `PSTestReport` that the build 
 We've consolidated this to four functions that creates the needed files in a good and easy to understand
 file structure.
 
-Using [Azure File Storage](https://redeploy.se/azure-file-share-ps-module-repository/) as a module repository.
+Using [Azure File Storage](https://redeploy.se/azure-file-share-ps-module-repository/) as a module repository. It's of course possibly to deploy to other repositories. Change the Publish task in `ModuleName.build.ps1`, and write a deploy/publish function and add it to `build_utils.ps1`.
 
 
 **Content**
