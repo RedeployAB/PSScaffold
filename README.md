@@ -12,6 +12,8 @@ Michael Willis is also responsible for the module `PSTestReport` that the build 
 We've consolidated this to four functions that creates the needed files in a good and easy to understand
 file structure.
 
+Using [Azure File Storage](https://redeploy.se/azure-file-share-ps-module-repository/) as a module repository.
+
 
 **Content**
 
