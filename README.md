@@ -361,6 +361,14 @@ Install-PSAzureVMModule @params
 
 ## <a name=version>Versions and Updates</a>
 
+### v1.0.1
+
+Changes to templates. Before/After hooks are now longer used by default. It's up
+to the user and their needs if these needs to be implemented.
+
+* Updated `t_build_settings.ps1` template. Commented out hooks.
+* Updated `t_build.ps1` template. Removed Before/Afte hooks on templated tasks.
+
 ### v1.0.0
 
 * First release.
