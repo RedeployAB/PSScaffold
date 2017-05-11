@@ -7,7 +7,7 @@
 . './api-keys.ps1'
 
 #Synopsis: Run/Publish Tests and Fail Build on Error.
-task Test BeforeTest, RunTests, ConfirmTestsPassed, AfterTest
+task Test RunTests, ConfirmTestsPassed
 
 #Synopsis: Run full Pipeline.
 task . Clean, Analyze, Test, Publish
@@ -16,7 +16,7 @@ task . Clean, Analyze, Test, Publish
 task InstallDependencies {}
 
 #Synopsis: Clean Artifact directory.
-task Clean BeforeClean, {
+task Clean {
     
     if (Test-Path -Path $Artifacts) {
         Remove-Item "$Artifacts/*" -Recurse -Force
@@ -26,10 +26,10 @@ task Clean BeforeClean, {
 
     & git clone https://github.com/Xainey/PSTestReport.git
 
-}, AfterClean
+}
 
 #Synopsis: Analyze code.
-task Analyze BeforeAnalyze, {
+task Analyze {
     $scriptAnalyzerParams = @{
         Path = $ModulePath
         ExcludeRule = @('PSPossibleIncorrectComparisonWithNull', 'PSUseToExportFieldsInManifest')
@@ -41,7 +41,7 @@ task Analyze BeforeAnalyze, {
     $saResults = Invoke-ScriptAnalyzer @scriptAnalyzerParams
     # Save the results.
     $saResults | ConvertTo-Json | Set-Content (Join-Path $Artifacts "ScriptAnalysisResults.json")
-}, AfterAnalyze
+}
 
 #Synopsis: Run tests.
 task RunTests {
@@ -88,7 +88,7 @@ task ConfirmTestsPassed {
 }
 
 #Synopsis: Publish to PSGallery.
-task Publish BeforePublish, {
+task Publish {
     
     $moduleInfo = @{
         Path = $ModulePath
@@ -97,4 +97,4 @@ task Publish BeforePublish, {
 
     Publish-Module @moduleInfo
 
-}, AfterPublish
+}
