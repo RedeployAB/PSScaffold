@@ -33,22 +33,22 @@ param(
 ########################################################################
 
 #Synopsis: Executues before the Clean Task.
-task BeforeClean {}
+#task BeforeClean {}
 #Synopsis: Executues after the Clean Task.
-task AfterClean {}
+#task AfterClean {}
 
 #Synopsis: Executues before the Analyze Task.
-task BeforeAnalyze {}
+#task BeforeAnalyze {}
 #Synopsis: Executues after the Analyze Task.
-task AfterAnalyze {}
+#task AfterAnalyze {}
 
 #Synopsis: Executes before Test Task.
-task BeforeTest {}
+#task BeforeTest {}
 #Synopsis: Executes after Test Task.
-task AfterTest {}
+#task AfterTest {}
 
 #Synopsis: Executes before Publish Task.
-task BeforePublish {}
+#task BeforePublish {}
 #Synopsis: Executes after Publish Task.
-task AfterPublish {}
+#task AfterPublish {}
 "@
