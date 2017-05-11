@@ -51,7 +51,13 @@ make them part of the build process to deploy them to the server when the build 
 
 ## <a name=install>Installation</a>
 
-Copy the module directory to a `Modules` directory that is included in `PSModulePath`.
+From the PowerShell Gallery:
+
+`Install-Module -Name PSScaffold`
+
+From GitHub:
+
+Download the project and copy the module directory to a `Modules` directory that is included in `PSModulePath`.
 
 To include it in other projects incorporate this in the module functions:
 
