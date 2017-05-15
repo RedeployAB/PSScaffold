@@ -12,19 +12,20 @@ param(
 # Static settings.
 ########################################################################
 `$Settings = @{
-    SMBRepositoryName = ''
-    SMBRepositoryPath = ''
-
-    Author = "<author>"
-    Owners = ""
-    LicenseUrl = ""
-    ProjectUrl = ""
-    PackageDescription = ""
-    Repository = ""
-    Tags = ""
-
-    GitRepo = ""
-    CIUrl = ""
+#    SMBRepositoryName = ''
+#    SMBRepositoryPath = ''
+#
+#    Author = "<author>"
+#    Owners = ""
+#    LicenseUrl = ""
+#    ProjectUrl = ""
+#    PackageDescription = ""
+#    Repository = ""
+#    Tags = ""
+#
+#    GitRepo = ""
+#    CIUrl = ""
+#    ApiKey = ""
 }
 
 

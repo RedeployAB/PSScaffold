@@ -97,7 +97,7 @@ task Publish {
         BuildNumber = `$BuildNumber
     }
 
-    Publish-SMBModule @moduleInfo -Verbose
+    Publish-PSModule @moduleInfo -Verbose
 
 }
 "@
