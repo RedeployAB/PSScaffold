@@ -361,6 +361,18 @@ Install-PSAzureVMModule @params
 
 ## <a name=version>Versions and Updates</a>
 
+### v1.0.3
+
+* Fixed error in template for `build_utils.ps1`.
+
+### v1.0.2
+
+Some changes to the templates and initial scaffolding. The new `Publish-PSModule` might be moved from `build_utils.ps1` to be part of `PSScaffold` as a whole.
+That is also why this is more of a fix than a minor version increment, since `PSScaffold` itself does not receive the function.
+
+* Updated template for `build_utils.ps1`. The function `Publish-SMBModule` has been renamed to `Publish-PSModule` and has been reworked to support the official **PSGallery**.
+* Updated template for `x.settings.ps1`. Most settings has been outcommented, to allow the user to customize more freely when modifying their build pipeline.
+
 ### v1.0.1
 
 Changes to templates. Before/After hooks are now longer used by default. It's up
