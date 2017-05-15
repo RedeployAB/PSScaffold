@@ -4,8 +4,6 @@
 # Include: build_utils.
 . './build_utils.ps1'
 
-. './api-keys.ps1'
-
 #Synopsis: Run/Publish Tests and Fail Build on Error.
 task Test RunTests, ConfirmTestsPassed
 
@@ -91,10 +89,12 @@ task ConfirmTestsPassed {
 task Publish {
     
     $moduleInfo = @{
-        Path = $ModulePath
-        NugetApiKey = $psGalleryAPIkey
+        RepositoryName = 'PSGallery'
+        ModuleName = $ModuleName
+        ModulePath = "$ModulePath\$ModuleName.psd1"
+        ApiKey = $Settings.ApiKey
+        BuildNumber = $BuildNumber
     }
 
-    Publish-Module @moduleInfo
-
+    Publish-PSModule @moduleInfo
 }
