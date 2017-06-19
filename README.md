@@ -190,6 +190,9 @@ Function to scaffold the structure of a test file for Pester tests.
 | `Scope`      | *String* | False     | *Private*, *Public* | The scope of the function. Allowed values: Private and Public. Default: Public. |
 
 
+**`Publish-PSModule`**
+
+
 ## <a name=usage>Usage Examples</a>
 
 **New-PSModule**
@@ -360,6 +363,13 @@ Install-PSAzureVMModule @params
 
 
 ## <a name=version>Versions and Updates</a>
+
+### v1.1.0
+
+* Updated template for Pester-tests. Includes code snippet to Import it's own module from both root directory, and from the test files directory. The test can be run from root directory with `Invoke-Build` as
+well as from the built-in test functionality from *Visual Studio Code* (which looks in the directory of the test file).
+
+* Added `Publish-PSModule` found in `build_utils.ps1` as a function to the module.
 
 ### v1.0.3
 

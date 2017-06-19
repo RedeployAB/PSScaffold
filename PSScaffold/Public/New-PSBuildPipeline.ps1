@@ -1,15 +1,18 @@
 <#
 .SYNOPSIS
-    Creates a new build pipeline.
-.DESCRIPTION
-    Creates build pipeline files and scaffolds base structure, to the target module.
-.PARAMETER Module
-    <String> The name of a module, or the parent path of a module manifest.
-.NOTES
-    This scaffolding script is inspired by The PowerShell Build Pipeline as proposed by xainey (Michael Willis):
-    https://xainey.github.io/2017/powershell-module-pipeline/
+Creates a new build pipeline.
 
-    Written by Karl Wallenius, Redeploy AB.
+.DESCRIPTION
+Creates build pipeline files and scaffolds base structure, to the target module.
+
+.PARAMETER Module
+<String> The name of a module, or the parent path of a module manifest.
+
+.NOTES
+This scaffolding script is inspired by The PowerShell Build Pipeline as proposed by xainey (Michael Willis):
+https://xainey.github.io/2017/powershell-module-pipeline/
+
+Written by Karl Wallenius, Redeploy AB.
 #>
 function New-PSBuildPipeline {
     [CmdletBinding()]

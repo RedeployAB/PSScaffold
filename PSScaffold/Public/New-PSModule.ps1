@@ -1,23 +1,29 @@
 <#
 .SYNOPSIS
-    Scaffolds new module structure.
+Scaffolds new module structure.
+
 .DESCRIPTION
-    Function to initialize and scaffolc the structure for a PowerShell script/function module.
+Function to initialize and scaffolc the structure for a PowerShell script/function module.
+
 .PARAMETER Name
-    <String> The name of the module.
+<String> The name of the module.
+
 .PARAMETER Path
-    <String> Path to where the module should be created.
+<String> Path to where the module should be created.
+
 .PARAMETER Author
-    <String> Name of the author.
+<String> Name of the author.
+
 .PARAMETER Description
-    <String> Description of the module.
+<String> Description of the module.
+
 .NOTES
-    This scaffolding script is inspired by Rambling Cookie Monster,
-    http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/
+This scaffolding script is inspired by Rambling Cookie Monster,
+http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/
 
-    For yet more advanced features, modify the resulting module manifest manually.
+For yet more advanced features, modify the resulting module manifest manually.
 
-    Made as a function in a module by Karl Wallenius, Redeploy AB.
+Made as a function in a module by Karl Wallenius, Redeploy AB.
 #>
 function New-PSModule {
     [CmdletBinding()]

@@ -1,16 +1,22 @@
 <#
 .SYNOPSIS
-    Creates a new function file.
+Creates a new function file.
+
 .DESCRIPTION
-    Creates a new function file and scaffolds base structure, to the target module.
+Creates a new function file and scaffolds base structure, to the target module.
+
 .PARAMETER Name
-    <String> The name of the function to create.    
+<String> The name of the function to create.    
+
 .PARAMETER Module
-    <String> The name of a module, or the parent path of a module manifest.
+<String> The name of a module, or the parent path of a module manifest.
+
 .PARAMETER Scope
-    <String> The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
+<String> The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
+
 .PARAMETER PesterTest
-    <switch> If used, a Pester Test file will be created in the module.
+<Switch> If used, a Pester Test file will be created in the module.
+
 .NOTES
     Written by Karl Wallenius, Redeploy AB.
 #>
