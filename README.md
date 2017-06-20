@@ -192,6 +192,18 @@ Function to scaffold the structure of a test file for Pester tests.
 
 **`Publish-PSModule`**
 
+This function is used to publish a module (after verifying and incrementing the version number with the repository) repository.
+NuGet and SMB share is supported.
+ 
+| Param            | Type     | Mandatory | Allowed Values      |                                          |
+|------------------|----------|-----------|---------------------|------------------------------------------|
+| `RepositoryName` | *String* | True      |                     | Name of the module repository.           |
+| `RepositoryPath` | *String* | False     |                     | Path to repository (**\\path\to\repo**). |
+| `ApiKey`         | *String* | False     |                     | NuGet API key.                           |
+| `ModuleName`     | *String* | True      |                     | Name of the module to publish.           |
+| `ModulePath`     | *String* | True      |                     | Path to the modules manifest (`.psd1`).  |
+| `BuildNumber`    | *Int32*  | True      |                     | Number of the build.                     |
+
 
 ## <a name=usage>Usage Examples</a>
 
@@ -363,6 +375,12 @@ Install-PSAzureVMModule @params
 
 
 ## <a name=version>Versions and Updates</a>
+
+### v1.1.1
+
+* Added help text in function `Publish-PSModule`.
+* Added task `Clean` to the pre-made `Test` task.
+* Modified task `Clean` to check if `PSTestReport` is downloaded before cloning.
 
 ### v1.1.0
 
