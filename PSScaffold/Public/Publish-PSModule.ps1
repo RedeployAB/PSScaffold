@@ -1,29 +1,28 @@
 ﻿<#
 .SYNOPSIS
+Function to publish modules to a PowerShell Repository.
 
 .DESCRIPTION
-Long description
+Function to publish PowerShell Modules to a PowerShell Repository, NuGet and SMB
+supported.
 
 .PARAMETER RepositoryName
-Parameter description
+<String> Name of the PowerShell repository.
 
 .PARAMETER RepositoryPath
-Parameter description
+<String> Path to the PowerShell repository (if not PSGallery). Format: \\path\to\repo
 
 .PARAMETER ApiKey
-Parameter description
+<String> NuGet API key to the repository/feed.
 
 .PARAMETER ModuleName
-Parameter description
+<String> Name of the module to publish.
 
 .PARAMETER ModulePath
-Parameter description
+<String> File path to the modules manifest file (.psd1).
 
 .PARAMETER BuildNumber
-Parameter description
-
-.EXAMPLE
-An example
+<Int23> The build number of the module (minor version).
 
 .NOTES
 General notes
