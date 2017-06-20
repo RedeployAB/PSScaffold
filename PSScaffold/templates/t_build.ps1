@@ -6,7 +6,7 @@ $BuildFileContent = @"
 . './build_utils.ps1'
 
 #Synopsis: Run/Publish Tests and Fail Build on Error.
-task Test RunTests, ConfirmTestsPassed
+task Test Clean, RunTests, ConfirmTestsPassed
 
 #Synopsis: Run full Pipeline.
 task . Clean, Analyze, Test, Publish
@@ -23,8 +23,10 @@ task Clean {
 
     New-Item -ItemType Directory -Path `$Artifacts -Force
 
-    & git clone https://github.com/Xainey/PSTestReport.git
-
+    if (!(Test-Path -Path .\PSTestReport)) {
+        & git clone https://github.com/Xainey/PSTestReport.git
+    }
+    
 }
 
 #Synopsis: Analyze code.
