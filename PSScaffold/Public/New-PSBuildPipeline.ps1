@@ -6,7 +6,7 @@ Creates a new build pipeline.
 Creates build pipeline files and scaffolds base structure, to the target module.
 
 .PARAMETER Module
-<String> The name of a module, or the parent path of a module manifest.
+The name of a module, or the parent path of a module manifest.
 
 .NOTES
 This scaffolding script is inspired by The PowerShell Build Pipeline as proposed by xainey (Michael Willis):

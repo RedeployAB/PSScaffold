@@ -6,16 +6,16 @@ Scaffolds new module structure.
 Function to initialize and scaffolc the structure for a PowerShell script/function module.
 
 .PARAMETER Name
-<String> The name of the module.
+The name of the module.
 
 .PARAMETER Path
-<String> Path to where the module should be created.
+Path to where the module should be created.
 
 .PARAMETER Author
-<String> Name of the author.
+Name of the author.
 
 .PARAMETER Description
-<String> Description of the module.
+Description of the module.
 
 .NOTES
 This scaffolding script is inspired by Rambling Cookie Monster,
@@ -76,7 +76,7 @@ function New-PSModule {
         
         New-Item "$Path\$Name\$Name\$Name.psm1" -ItemType File | Out-Null
         New-Item "$Path\$Name\$Name\en-US\about_$Name.help.txt" -ItemType File | Out-Null
-        New-Item "$Path\$Name\README.md" -ItemType File | Out-Null
+        #New-Item "$Path\$Name\README.md" -ItemType File | Out-Null
         
 
         $moduleParams = @{
@@ -95,10 +95,8 @@ function New-PSModule {
         Write-Verbose "Creating help file."
         $HelpFileContent -replace "<module>", "$Name" | Out-File "$Path\$Name\$Name\en-US\about_$Name.help.txt" -Encoding utf8
 
-
-        $ReadmeContent = "# $Name" | Out-File "$Path\$Name\README.md" -Encoding utf8
-
-        # Content for build and build settings.
+        Write-Verbose "Creating README.md file."
+        $ReadmeContent -replace "<module>", "$Name" | Out-File "$Path\$Name\README.md" -Encoding utf8 
 
         if ($BuildPipeline) {
             

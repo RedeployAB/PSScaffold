@@ -6,13 +6,13 @@ Creates a new Pester Test file.
 Function to scaffold the structure of a test file for Pester tests.
 
 .PARAMETER Name
-<String> The name of the function to create a test for.
+The name of the function to create a test for.
 
 .PARAMETER Module
-<String> The name of a module, or the parent path of a module manifest.
+The name of a module, or the parent path of a module manifest.
 
 .PARAMETER Scope
-<String> The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
+The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
 
 .EXAMPLE
 To create a new Pester test for the function New-Action in Module 'MyModule', by Module name, and place it in the public scope.

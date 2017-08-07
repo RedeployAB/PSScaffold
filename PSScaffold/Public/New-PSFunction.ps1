@@ -6,16 +6,16 @@ Creates a new function file.
 Creates a new function file and scaffolds base structure, to the target module.
 
 .PARAMETER Name
-<String> The name of the function to create.    
+The name of the function to create.    
 
 .PARAMETER Module
-<String> The name of a module, or the parent path of a module manifest.
+The name of a module, or the parent path of a module manifest.
 
 .PARAMETER Scope
-<String> The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
+The scope of the function according to Redeploy scaffolding standards. Allowed values: Private and Public. Default: Public.
 
 .PARAMETER PesterTest
-<Switch> If used, a Pester Test file will be created in the module.
+If used, a Pester Test file will be created in the module.
 
 .NOTES
     Written by Karl Wallenius, Redeploy AB.

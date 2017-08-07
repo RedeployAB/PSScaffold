@@ -7,22 +7,22 @@ Function to publish PowerShell Modules to a PowerShell Repository, NuGet and SMB
 supported.
 
 .PARAMETER RepositoryName
-<String> Name of the PowerShell repository.
+Name of the PowerShell repository.
 
 .PARAMETER RepositoryPath
-<String> Path to the PowerShell repository (if not PSGallery). Format: \\path\to\repo
+Path to the PowerShell repository (if not PSGallery). Format: \\path\to\repo
 
 .PARAMETER ApiKey
-<String> NuGet API key to the repository/feed.
+NuGet API key to the repository/feed.
 
 .PARAMETER ModuleName
-<String> Name of the module to publish.
+Name of the module to publish.
 
 .PARAMETER ModulePath
-<String> File path to the modules manifest file (.psd1).
+File path to the modules manifest file (.psd1).
 
 .PARAMETER BuildNumber
-<Int23> The build number of the module (minor version).
+The build number of the module (minor version).
 
 .NOTES
 General notes
