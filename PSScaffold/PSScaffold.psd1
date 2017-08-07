@@ -97,7 +97,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'scaffold','template','build','test'
+        Tags = 'scaffold','template','build','test','module'
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/RedeployAB/PSScaffold/blob/master/LICENSE'
