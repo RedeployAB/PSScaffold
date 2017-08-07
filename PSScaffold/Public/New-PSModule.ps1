@@ -49,6 +49,7 @@ function New-PSModule {
         # Import templates from variables.
         . "$PSScriptRoot\..\templates\t_module.ps1"
         . "$PSScriptRoot\..\templates\t_help.ps1"
+        . "$PSScriptRoot\..\templates\t_readme.ps1"
 
         # Handle the path of the module.
         if ([string]::IsNullOrEmpty($Path)) {
