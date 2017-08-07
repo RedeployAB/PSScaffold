@@ -30,7 +30,7 @@ InModuleScope "PSScaffold" {
             { Test-Path "$testPath\$testName\Tests" } | Should be $true
             { Test-Path "$testPath\$testName\Tests\Private" } | Should be $true
             { Test-Path "$testPath\$testName\Tests\Public" } | Should be $true
-            { Test-Path "$testPath\$testName\README.md" }
+            { Test-Path "$testPath\$testName\README.md" } | Should Be $true
         }
 
         It "Should create the file $testName.psm1 with the correct content" {
@@ -49,6 +49,18 @@ InModuleScope "PSScaffold" {
             $helpFileContent = Get-Content "$testModulePath\en-US\about_$testName.help.txt"
 
             "$testModulePath\en-US\about_$testName.help.txt" | Should Contain "about_$testName"
+        }
+
+        It "Should create a README.md with the correct content" {
+
+            . "$PSScriptRoot\..\..\PSScaffold\templates\t_readme.ps1"
+
+            $ReadmeContent -replace "<module>", "$testName" | Out-File "TestDrive:\README.md"
+            $expectedContent = Get-Content "TestDrive:\README.md"
+
+            $readmeFileContent = Get-Content "$testPath\$testName\README.md"
+
+            $readmeFileContent | Should Be $expectedContent
         }
 
         Remove-Item "$testPath\$testName" -Recurse -Force
