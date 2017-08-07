@@ -376,6 +376,11 @@ Install-PSAzureVMModule @params
 
 ## <a name=version>Versions and Updates</a>
 
+### v1.1.2
+
+* Added a template for a README.md when creating new modules with `New-PSModule`. Of course you may format your README in your own style. It's merely a suggestion.
+* Minor bug fixes and enhancements.
+
 ### v1.1.1
 
 * Added help text in function `Publish-PSModule`.
