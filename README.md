@@ -376,6 +376,14 @@ Install-PSAzureVMModule @params
 
 ## <a name=version>Versions and Updates</a>
 
+### v1.1.4
+
+* Removed support for updatable help.
+
+### v1.1.3
+
+* Fixed URI to HelpInfo.
+
 ### v1.1.2
 
 * Added a template for a README.md when creating new modules with `New-PSModule`. Of course you may format your README in your own style. It's merely a suggestion.
