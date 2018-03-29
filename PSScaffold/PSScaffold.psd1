@@ -12,7 +12,7 @@
 RootModule = 'PSScaffold.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.3'
+ModuleVersion = '1.1.5'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -125,7 +125,7 @@ PrivateData = @{
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-#HelpInfoURI = ''
+# HelpInfoURI = ''
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
