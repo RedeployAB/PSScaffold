@@ -48,7 +48,7 @@ InModuleScope "PSScaffold" {
 
             $helpFileContent = Get-Content "$testModulePath\en-US\about_$testName.help.txt"
 
-            "$testModulePath\en-US\about_$testName.help.txt" | Should Contain "about_$testName"
+            "$testModulePath\en-US\about_$testName.help.txt" | Should Match "about_$testName"
         }
 
         It "Should create a README.md with the correct content" {
