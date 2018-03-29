@@ -376,6 +376,11 @@ Install-PSAzureVMModule @params
 
 ## <a name=version>Versions and Updates</a>
 
+### v1.1.5
+
+* Removed folder en-US to fully remove the support for updatable help. Unfortunately this could not be tested locally as long as older versions of the 
+module existed on the system. Build and deploy process will be looked into to further avoid a lot of version numbers.
+
 ### v1.1.4
 
 * Removed support for updatable help.
