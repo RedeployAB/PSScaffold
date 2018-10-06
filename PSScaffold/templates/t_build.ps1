@@ -21,12 +21,7 @@ task Clean {
         Remove-Item "`$Artifacts/*" -Recurse -Force
     }
 
-    New-Item -ItemType Directory -Path `$Artifacts -Force
-
-    if (!(Test-Path -Path .\PSTestReport)) {
-        & git clone https://github.com/Xainey/PSTestReport.git
-    }
-    
+    New-Item -ItemType Directory -Path `$Artifacts -Force    
 }
 
 #Synopsis: Analyze code.
@@ -59,20 +54,6 @@ task RunTests {
     `$testResults = Invoke-Pester @invokePesterParams
 
     `$testResults | ConvertTo-Json -Depth 5 | Set-Content (Join-Path `$Artifacts "PesterResults.json")
-
-    `$options = @{
-        BuildNumber = `$BuildNumber
-        GitRepo = `$Settings.GitRepo
-        GetRepoUrl = `$Settings.ProjectUrl
-        CiURL = `$Settings.CiURL
-        ShowHitCommands = `$true
-        Compliance = (`$PercentCompliance / 100)
-        ScriptAnalyzerFile = (Join-Path `$Artifacts "ScriptAnalysisResults.json")
-        PesterFile = (Join-Path `$Artifacts "PesterResults.json")
-        OutputDir = "`$Artifacts"
-    }
-
-    . ".\PSTestReport\Invoke-PSTestReport.ps1" @options
 }
 
 #Synopsis: Confirm that tests passed.
