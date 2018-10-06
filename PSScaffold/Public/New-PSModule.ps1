@@ -65,20 +65,18 @@ function New-PSModule {
         # Create directories for the project
         Write-Verbose "Creating directory structure."
 
-        New-Item -ItemType Directory -Path "$Path\$Name\$Name" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\$Name\Private" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\$Name\Public" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\$Name\en-US" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\Tests" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\Tests\Private" | Out-Null
-        New-Item -ItemType Directory -Path "$Path\$Name\Tests\Public" | Out-Null
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\Private")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\Public")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\en-US")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests\Private")
+        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests\Public")
 
         Write-Verbose "Creating module project files."
         
-        New-Item "$Path\$Name\$Name\$Name.psm1" -ItemType File | Out-Null
-        New-Item "$Path\$Name\$Name\en-US\about_$Name.help.txt" -ItemType File | Out-Null
-        #New-Item "$Path\$Name\README.md" -ItemType File | Out-Null
-        
+        [void](New-Item "$Path\$Name\$Name\$Name.psm1" -ItemType File)
+        [void](New-Item "$Path\$Name\$Name\en-US\about_$Name.help.txt" -ItemType File)      
 
         $moduleParams = @{
             Path = "$Path\$Name\$Name\$Name.psd1"
@@ -86,6 +84,7 @@ function New-PSModule {
             Description = $Description
             PowerShellVersion = "3.0"
             Author = $Author
+            ModuleVersion = "1.0.0"
         }
 
         New-ModuleManifest @moduleParams
@@ -100,7 +99,6 @@ function New-PSModule {
         $ReadmeContent -replace "<module>", "$Name" | Out-File "$Path\$Name\README.md" -Encoding utf8 
 
         if ($BuildPipeline) {
-            
             New-PSBuildPipeline -Module "$Path\$Name"
         }
     }

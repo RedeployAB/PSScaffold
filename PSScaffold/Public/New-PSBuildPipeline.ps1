@@ -58,19 +58,19 @@ function New-PSBuildPipeline {
         $gitIgnoreFilePath = Join-Path $modulePath ".gitignore"
 
         Write-Verbose "Creating build file."
-        New-Item $buildFilePath | Out-Null
-        $BuildFileContent -replace "<module>", "$moduleName" | Out-File $buildFilePath -Encoding utf8
+        [void](New-Item -Path $buildFilePath -ItemType File)
+        $BuildFileContent -replace "<module>", "$moduleName" | Set-Content -Path $buildFilePath -Encoding utf8
 
         Write-Verbose "Creating build settings file."
-        New-Item $buildSettingsFilePath | Out-Null
-        $BuildSettingsFileContent -replace "<module>", "$moduleName" | Out-File $buildSettingsFilePath -Encoding utf8
+        [void](New-Item -Path $buildSettingsFilePath -ItemType File)
+        $BuildSettingsFileContent -replace "<module>", "$moduleName" | Set-Content -Path $buildSettingsFilePath -Encoding utf8
             
         Write-Verbose "Creating build utilities file."
-        New-Item $buildUtilsFilePath | Out-Null
-        $BuildUtilsFileContent | Out-File $buildUtilsFilePath -Encoding utf8
+        [void](New-Item -Path $buildUtilsFilePath -ItemType File)
+        $BuildUtilsFileContent | Set-Content -Path $buildUtilsFilePath -Encoding utf8
 
         Write-Verbose "Creating .gitignore file."
-        New-Item $gitIgnoreFilePath | Out-Null
-        $GitIgnoreFileContent | Out-File $gitIgnoreFilePath -Encoding utf8 
+        [void](New-Item -Path $gitIgnoreFilePath -ItemType File)
+        $GitIgnoreFileContent | Set-Content -Path $gitIgnoreFilePath -Encoding utf8 
     }
 }

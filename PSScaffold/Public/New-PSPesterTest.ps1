@@ -69,7 +69,8 @@ function New-PSPesterTest {
         $moduleName = Split-Path $modulePath -Leaf
 
         Write-Verbose "Creating test file template..."
-        $PesterFileContent -replace "<module>", "$moduleName" -replace "<scope>","$Scope" -replace "<name>", "$Name" | Out-File $filePath -Encoding utf8
+        $PesterFileContent -replace "<module>", "$moduleName" -replace "<scope>","$Scope" -replace "<name>", "$Name" | 
+            Out-File $filePath -Encoding utf8
         Write-Verbose "Test file template is done."
     }
 }
