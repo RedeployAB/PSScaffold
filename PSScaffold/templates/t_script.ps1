@@ -63,7 +63,6 @@ if (`$moduleInstalledOrUpdated) {
 "@
 
 if (!([string]::IsNullOrEmpty($StorageAccountName)) -and !([string]::IsNullOrEmpty($StorageAccountKey))) {
-    
     $scriptTemplate += "net use Z: /delete"
 }
 
