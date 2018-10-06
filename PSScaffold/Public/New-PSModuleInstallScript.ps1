@@ -66,7 +66,7 @@ function New-PSModuleInstallScript {
 
     process {
         # Import template.
-        . "$PSScriptRoot\..\templates\script_template.ps1"
+        . "$PSScriptRoot\..\templates\t_script.ps1"
 
         Write-Verbose "Creating script from template."
 
