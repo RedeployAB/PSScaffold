@@ -24,6 +24,15 @@ File path to the modules manifest file (.psd1).
 .PARAMETER BuildNumber
 The build number of the module (minor version).
 
+.PARAMETER Properties
+Hashtable containing additional properties:
+
+    ReleaseNotes    = <String>
+    Tags	        = <Array>
+    LicenseUri	    = <String>
+    IconUri	        = <String>
+    ProjectUri      = <String>
+
 .NOTES
 General notes
 #>
@@ -46,7 +55,11 @@ function Publish-PSModule {
         $ModulePath,
         [Parameter(Mandatory = $true)]
         [int]
-        $BuildNumber
+        $BuildNumber,
+        [Parameter(Mandatory = $false)]
+        [AllowNull()]
+        [hashtable]
+        $Properties
     )
 
     process {
@@ -96,10 +109,38 @@ function Publish-PSModule {
             if ([string]::IsNullOrEmpty($ApiKey)) {
                 throw("Please pass on a NuGet API key to deploy to the PSGallery.")
             } else {
-                $publishParams.NuGetApiKey = $ApiKey
+                $publishParams.Add("NuGetApiKey", $ApiKey)
             }
         } else {
-            $publishParams.Repository = $RepositoryName
+            $publishParams.Add("Repository", $RepositoryName)
+        }
+
+        # Adding additional parameters to the publishing.
+        if ($Properties) {
+            if ($Properties["ReleaseNotes"]) { 
+                $publishParams.Add("ReleaseNotes", $Properties["ReleaseNotes"]) 
+            }
+
+            if ($Properties["Tags"]) {
+                
+                if ($Properties["Tags"].GetType().Name -eq "String") {
+                    $Properties["Tags"] = $Properties["Tags"].Split(',')
+                }
+                
+                $publishParams.Add("Tags", $Properties["Tags"]) 
+            }
+
+            if ($Properties["LicenseUri"]) {
+                $publishParams.Add("LicenseUri", $Properties["LicenseUri"])
+            }
+
+            if ($Properties["IconUri"]) {
+                $publishParams.Add("IconUri", $Properties["IconUri"])
+            }
+
+            if ($Properties["ProjectUri"]) {
+                $publishParams.Add("ProjectUri", $Properties["ProjectUri"])
+            }
         }
 
         try {

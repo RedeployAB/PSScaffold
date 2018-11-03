@@ -7,7 +7,7 @@ $scriptTemplate = @"
 # Adding drive.
 if (!([string]::IsNullOrEmpty($StorageAccountName)) -and !([string]::IsNullOrEmpty($StorageAccountKey))) {
     $mapURI = Split-Path $RepositoryPath -Parent
-    $scriptTemplate += "net use Z: $mapURI /u:AZURE\$StorageAccountName $StorageAccountKey"
+    $scriptTemplate += "net use $mapURI /u:AZURE\$StorageAccountName $StorageAccountKey"
 }
 
 # Check if repository exists and is mapped.
@@ -63,7 +63,7 @@ if (`$moduleInstalledOrUpdated) {
 "@
 
 if (!([string]::IsNullOrEmpty($StorageAccountName)) -and !([string]::IsNullOrEmpty($StorageAccountKey))) {
-    $scriptTemplate += "net use Z: /delete"
+    $scriptTemplate += "net use Z: $mapURI /delete"
 }
 
 $scriptTemplate += @"

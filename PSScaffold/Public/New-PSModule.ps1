@@ -84,7 +84,7 @@ function New-PSModule {
             Description = $Description
             PowerShellVersion = "3.0"
             Author = $Author
-            ModuleVersion = "1.0.0"
+            ModuleVersion = "0.1.0"
         }
 
         New-ModuleManifest @moduleParams

@@ -83,4 +83,14 @@ task Publish {
     Publish-PSModule @moduleInfo -Verbose
 
 }
+
+task PublishLocal {
+
+    `$moduleInfo = @{
+        Path = "`$ModulePath\`$ModuleName.psd1"
+        Repository = '<LocalRepository>'
+    }
+
+    Publish-Module @moduleInfo
+}
 "@

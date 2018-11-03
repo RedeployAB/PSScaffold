@@ -39,7 +39,7 @@ InModuleScope "PSScaffold" {
             { Publish-PSModule @publishParams } | Should Not throw
         }
 
-        It "Should publish te module to a repository and update it's module manifest." {
+        It "Should publish the module to a repository and update it's module manifest." {
 
             Mock Get-PSRepository { return @{
                 Name = $RepositoryName
@@ -63,8 +63,71 @@ InModuleScope "PSScaffold" {
 
             $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
 
-            $moduleVersion | Should Be "1.0.1"
+            $moduleVersion | Should Be "0.1.1"
+        }
 
+        It "Should publish the module to a repository and update it's module manifest, with added properties." {
+
+            Mock Get-PSRepository { return @{
+                Name = $RepositoryName
+            }}
+
+            Mock Test-Path { return $true }
+
+            Mock Find-Module { return $true }
+
+            Mock Publish-Module { }
+
+            $publishParams = @{
+                RepositoryName = 'TestRepo'
+                RepositoryPath = '\\path\to\repo'
+                ModuleName = 'TestModule'
+                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                BuildNumber = 1
+                Properties = @{
+                    ReleaseNotes = "Release Notes."
+                    Tags = @('Tag1', 'Tag2')
+                    LicenseUri = "https://licenseuri"
+                    IconUri = "https://iconuri"
+                    ProjectUri = "https://projecturi"
+                }
+            }
+
+            { Publish-PSModule @publishParams } | Should Not throw
+
+            $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
+
+            $moduleVersion | Should Be "0.1.1"
+        }
+
+        It "Should publish the module to a repository and update it's module manifest, and split 'Tags' property if it's a string and comma seperated." {
+
+            Mock Get-PSRepository { return @{
+                Name = $RepositoryName
+            }}
+
+            Mock Test-Path { return $true }
+
+            Mock Find-Module { return $true }
+
+            Mock Publish-Module { }
+
+            $publishParams = @{
+                RepositoryName = 'TestRepo'
+                RepositoryPath = '\\path\to\repo'
+                ModuleName = 'TestModule'
+                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                BuildNumber = 1
+                Properties = @{
+                    Tags = 'Tag1,Tag2'
+                }
+            }
+
+            { Publish-PSModule @publishParams } | Should Not throw
+
+            $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
+
+            $moduleVersion | Should Be "0.1.1"
         }
 
         It "Should publish the module to PSGallery with an API key." {
