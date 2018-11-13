@@ -23,19 +23,19 @@ If used, a Pester Test file will be created in the module.
 function New-PSFunction {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $True, Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]
         $Name,
-        [Parameter(Mandatory = $False, Position = 1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [string]
         $Module,
-        [Parameter(Mandatory = $False, Position = 2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateSet('Public', 'Private')]
         [string]
         $Scope = "Public",
-        [Parameter(Mandatory = $False)]
+        [Parameter(Mandatory = $false)]
         [switch]
-        $PesterTest = $False
+        $PesterTest = $false
     )
 
     process {

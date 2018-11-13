@@ -1,4 +1,4 @@
-﻿# Include: Settings.
+# Include: Settings.
 . './PSScaffold.settings.ps1'
 
 # Include: build_utils.

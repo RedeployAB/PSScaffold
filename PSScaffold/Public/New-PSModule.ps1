@@ -17,6 +17,10 @@ Name of the author.
 .PARAMETER Description
 Description of the module.
 
+.PARAMETER BuildPipeline
+Switch to determine if Build Pipeline for Invoke-Build should be setup
+along with the module.
+
 .NOTES
 This scaffolding script is inspired by Rambling Cookie Monster,
 http://ramblingcookiemonster.github.io/Building-A-PowerShell-Module/
@@ -28,19 +32,19 @@ Made as a function in a module by Karl Wallenius, Redeploy AB.
 function New-PSModule {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $True, Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]
         $Name,
-        [Parameter(Mandatory = $False, Position = 1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [string]
         $Path,
-        [Parameter(Mandatory = $True, Position = 2)]
+        [Parameter(Mandatory = $true, Position = 2)]
         [string]
         $Author,
-        [Parameter(Mandatory = $False, Position = 3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [string]
         $Description,
-        [Parameter(Mandatory = $False)]
+        [Parameter(Mandatory = $false)]
         [switch]
         $BuildPipeline
     )

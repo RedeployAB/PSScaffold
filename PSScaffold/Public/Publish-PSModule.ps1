@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Function to publish modules to a PowerShell Repository.
 
@@ -46,6 +46,7 @@ function Publish-PSModule {
         [string]
         $RepositoryPath,
         [Parameter(Mandatory = $false)]
+        [string]
         $ApiKey,
         [Parameter(Mandatory = $true)]
         [string]

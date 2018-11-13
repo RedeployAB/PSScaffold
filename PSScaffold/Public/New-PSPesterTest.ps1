@@ -30,13 +30,13 @@ New-PSPesterTest -Name New-Action -Module C:\Users\JohnSmith\Documents\Projects\
 function New-PSPesterTest {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $True, Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]
         $Name,
-        [Parameter(Mandatory = $False, Position = 1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [string]
         $Module,
-        [Parameter(Mandatory = $False, Position = 2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateSet('Private', 'Public')]
         [string]
         $Scope = "Public"

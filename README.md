@@ -1,4 +1,4 @@
-﻿# PSScaffold
+# PSScaffold
 This module contains functions to scaffold the structures of PowerShell modules and build pipelines.
 
 The structure of the resulting module file structure is inspired by:
@@ -66,30 +66,6 @@ To include it in other projects incorporate this in the module functions:
 
 ### Public functions
 
-**`Install-PSAzureVMModule`**
-
-This function is used to deploy a module on an Azure VM. For this function to work an installation script must exist.
-Either an installation script can be located in an Azure Storage account, or directly through an URI.
-
-Use the switch `UploadScript` to generate an upload script that is uploaded to the specified Storage Account. Otherwise
-you will have to generate this manually, and upload it to the specified container, before using `Install-PSAzureVMModule`.
-
-| Param                | Type     | Mandatory | Allowed Values |                                                                 |
-|----------------------|----------|-----------|----------------|-----------------------------------------------------------------|
-| `Name`               | *String* | True      |                | Name of the module.                                             |
-| `SubscriptionId`     | *String* | True      |                | The GUID of the Subscription on where the VM resides.           |
-| `ResourceGroupName`  | *String* | True      |                | Name of the Resource Group of the VM.                           |
-| `VMName`             | *String* | True      |                | Name of the VM.                                                 |
-| `FileName`           | *String* | True      |                | Name if the installation script.                                |
-| `Argument`           | *String* | False     |                | Arguments to the script.                                        |
-| `StorageAccountName` | *String* | False     |                | Name of Storage Account where installation script is located.   |
-| `Container`          | *String* | False     |                | Name of container where installation script is located.         |
-| `UploadScript`       | *Switch* | False     |                | Switch to determine if script should be generated and uploaded. |
-| `RepositoryName`     | *String* | False     |                | Used with the `UploadScript` switch. Used for script generation. |
-| `RepositoryPath`     | *String* | False     |                | Used with the `UploadScript` switch. Used for script generation.
-| `FileUri`            | *String* | False     |                | URI to the installation script.                                 |
-
-
 **`New-PSBuildPipeline`**
 
 Scaffolds settings and scripts for a build process.
@@ -115,6 +91,7 @@ It will add some files to the module project directory. The updated structure wi
 - ModuleName.settings.ps1
 - README.md
 ```
+
 
 **`New-PSFunction`**
 
@@ -143,6 +120,7 @@ created at your current location in the file system.
 | `BuildPipeline` | *Switch* | False     |                | Adds a build pipeline inside the function with `New-PSBuildPipeline` |
 
 
+
 It will create the following folders and files.
 
 ```
@@ -155,26 +133,6 @@ It will create the following folders and files.
 -- ModuleName.psd1
 -- ModuleName.psm1
 ```
-
-**`New-PSModuleInstallScript`**
-
-Function to generate a module installation script. At this writing it only supports scripts targeted at Repositories that
-are made available through `Register-PSRepository`. This might change in a future release.
-
-If `StorageAccountName` is left empty. It will not add the mapping of the network drive inside the script. This is 
-usefule if you just want to generate a script template and modify it afterwards.
-
-The script is supposed to be run on the target server, and do the necessary steps to install the module with
-`Install-Module` from the specified **PSRepository** (which can very depending on your environment).
-
-| Param                | Type     | Mandatory | Allowed Values |                                                               |
-|----------------------|----------|-----------|----------------|---------------------------------------------------------------|
-| `RepositoryName`     | *String* | True      |                | The name of the PowerShell repository.                        |
-| `RepositoryPath`     | *String* | True      |                | The path to the PowerShell repository.                        |
-| `Module`             | *String* | True      |                | Name of the Module.                                           |
-| `OutputPath`         | *String* | False     |                | Output path of the script. If no parameter is given, it defaults to the current path with name `install-module.ps1 |
-| `StorageAccountName` | *String* | False     |                | Used for adding net drive mapping to the install script.      |
-| `StorageAccountKey`  | *String* | False     |                | Used for adding net drive mapping to the install script.      |
 
 
 **`New-PSPesterTest`**
@@ -302,71 +260,3 @@ New-PSPesterTest -Name Get-Stuff -Module C:\Users\UserA\Documents\Projects\Exist
 
 The function takes a parameter `Scope` that allows `Public` and `Private`.
 This will determine what subdirectory the new function will be placed
-
-
-**New-PSModuleInstallScript**
-
-To generate install scripts:
-
-```
-# Generates a basic install script hat installs the module form a custom repository.
-
-New-PSModuleInstallScript -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -Module PSTools
-
-# Generate a script that in the script also maps the network drive needed for the PSRepository
-# that is located in an Azure File Share
-
-New-PSModuleInstallScript -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -Module PSTools -StorageAccountName customstorage -StorageAccountKey longkeystring 
-```
-
-**Install-AzureVMModule**
-
-Installing a PowerShell module from your own localhost (or other machine) to a target
-Azure Virtual Machine (ARM). This is best used when automated in a build script of sorts,
-or in a task with `Invoke-Build`.
-
-```
-# To Install the module on the VM with an auto-generated installation script.
-
-Install-PSAzureVMModule -Name PSTools -SubscriptionId GUID -ResorceGroupName rg1 -VMName vm1 -FileName install-pstools.ps1 -StorageAccountName customstorage -Container scripts -RepositoryName CustomRepository -RepositoryPath \\path\to\repo -UploadScript 
-
-# Or more readable
-$params = @{
-    Name = "PSTools"
-    SubscriptionId = "GUID"
-    ResourceGroupName = "rg1"
-    VMName = "vm1"
-    FileName = "install-pstools.ps1"
-    StorageAccountName = "customstorage"
-    Container = "scripts"
-    RepositoryName = "CustomRepository"
-    RepositoryPath = "\\path\to\repo"
-}
-
-Install-PSAzureVMModule @params -UploadScript
-
-# To install a module with an existing script file in the storage account.
-$params = @{
-    Name = "PSTools"
-    SubscriptionId = "GUID"
-    ResourceGroupName = "rg1"
-    VMName = "vm1"
-    FileName = "<existing-script-name>.ps1"
-    StorageAccountName = "customstorage"
-    Container = "scripts"
-}
-
-Install-PSAzureVMModule @params
-
-# To install from a URI (HAS NOT BEEN VERIFIED YET)
-$params = @{
-    Name = "PSTools"
-    SubscriptionId = "GUID"
-    ResourceGroupName = "rg1"
-    VMName = "vm1"
-    FileName = "<existing-script-name>.ps1"
-    FileUri = "http://urltofile/<existing-script-name>.ps1"
-}
-
-Install-PSAzureVMModule @params
-```

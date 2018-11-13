@@ -12,7 +12,7 @@
 RootModule = 'PSScaffold.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.5'
+ModuleVersion = '2.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'Redeploy AB'
 Copyright = '(c) 2017 Redeploy AB. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'A module that contains functions to scaffold PowerShell module structures, new functions and Pester tests. Also some tools for deployment of the modules to Azure and generating install scripts. See the GitHub Repository for more information.'
+Description = 'A module that contains functions to scaffold PowerShell module structures, new functions and Pester tests. See the GitHub Repository for more information.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '3.0'
@@ -69,8 +69,8 @@ PowerShellVersion = '3.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Install-PSAzureVMModule', 'New-PSBuildPipeline', 'New-PSFunction', 
-               'New-PSModule', 'New-PSModuleInstallScript', 'New-PSPesterTest', 
+FunctionsToExport = 'New-PSBuildPipeline', 'New-PSFunction', 
+               'New-PSModule', 'New-PSPesterTest', 
                'Publish-PSModule'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

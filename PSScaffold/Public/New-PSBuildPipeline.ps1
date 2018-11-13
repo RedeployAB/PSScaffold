@@ -17,7 +17,7 @@ Written by Karl Wallenius, Redeploy AB.
 function New-PSBuildPipeline {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $False, Position = 0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [string]
         $Module
     )
