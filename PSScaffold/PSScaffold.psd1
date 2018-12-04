@@ -27,7 +27,7 @@ Author = 'Karl Wallenius, Redeploy'
 CompanyName = 'Redeploy AB'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Redeploy AB. All rights reserved.'
+Copyright = '(c) 2018 Redeploy AB. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'A module that contains functions to scaffold PowerShell module structures, new functions and Pester tests. See the GitHub Repository for more information.'

@@ -9,7 +9,7 @@ InModuleScope "PSScaffold" {
 
     Describe "Publish-PSModule" {
 
-        Mock Register-PSRepository { } # void
+        Mock Register-PSRepository { }
 
         $testPath = "$env:TEMP\TestModules"
         New-Item -ItemType Directory -Path $testPath

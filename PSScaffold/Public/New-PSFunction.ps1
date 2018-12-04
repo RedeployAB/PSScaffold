@@ -72,6 +72,4 @@ function New-PSFunction {
             New-PSPesterTest -Module (Split-Path $modulePath -Parent) -Name $Name -Scope $Scope
         }
     }
-
-
 }

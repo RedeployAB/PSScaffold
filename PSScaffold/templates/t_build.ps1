@@ -81,7 +81,6 @@ task Publish {
     }
 
     Publish-PSModule @moduleInfo -Verbose
-
 }
 
 task PublishLocal {

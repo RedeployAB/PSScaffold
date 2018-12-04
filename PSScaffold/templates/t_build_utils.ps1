@@ -106,14 +106,10 @@ function Publish-PSModule {
         }
 
         try {
-
             Publish-Module @publishParams
-
         } catch [System.Exception] {
             throw(`$_.Exception)
         }
-
     }
 }
-
 "@
