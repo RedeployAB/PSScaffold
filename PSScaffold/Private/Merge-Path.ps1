@@ -9,7 +9,7 @@ with the help of [System.IO.Path]::Combine().
 Same result can be achieved with Join-Path in PS 6.0 and above, but this
 lets us be backwards compatible.
 
-.PARAMETER Paths
+.PARAMETER Path
 Array of paths/strings to merge.
 
 .EXAMPLE
@@ -27,10 +27,10 @@ function Merge-Path {
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Paths
+        $Path
     )
 
     process {
-        [System.IO.Path]::Combine($paths) # The end
+        [System.IO.Path]::Combine($Path) # The end
     }
 }

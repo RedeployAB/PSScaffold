@@ -34,7 +34,7 @@ InModuleScope "PSScaffold" {
 
         It "Should only accept one parameter" {
             $getParameters = @{
-                Paths = @("Path A", "Path B")
+                Path = @("Path A", "Path B")
                 InvalidParameter = $null
             }
 
