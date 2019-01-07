@@ -17,12 +17,14 @@ Using [Azure File Storage](https://redeploy.se/azure-file-share-ps-module-reposi
 
 **Content**
 
-* [Introduction](#intro)
-* [Installation](#install)
+* [Introduction](#introduction)
+* [Installation](#installation)
 * [Functions](#functions)
-* [Usage Examples](#usage)
+  * [Public functions](#public-functions)
+  * [Private functions](#private-functions)
+* [Usage Examples](#usage-examples)
 
-## <a name=intro>Introduction</a>
+## Introduction
 
 **Prerequisites**
 
@@ -47,7 +49,7 @@ To get started with unit testing with Pester (a very big subject in itself):
 To make best use of `New-PSModuleInstallScript` and `Install-PSAzureVMModule` i really recommend to
 make them part of the build process to deploy them to the server when the build finishes and is successful.
 
-## <a name=install>Installation</a>
+## Installation
 
 From the PowerShell Gallery:
 
@@ -62,7 +64,7 @@ To include it in other projects incorporate this in the module functions:
 `Import-Module PSScaffold`
 
 
-## <a name="functions">Functions</a>
+## Functions
 
 ### Public functions
 
@@ -161,7 +163,33 @@ NuGet and SMB share is supported.
 | `BuildNumber`    | *Int32*  | True      |                     | Number of the build.                     |
 
 
-## <a name=usage>Usage Examples</a>
+### Private functions
+
+**`Get-ModulePath`**
+
+If a relative/provided path is valid, it is cleaned and returned. If the current
+path (.) is provided it is resolved and returned. Is there no path
+provided, the current location is returned.
+
+| Param  | Type     | Mandatory | Allowed Values      |                                          |
+|--------|----------|-----------|---------------------|------------------------------------------|
+| `Path` | *String* | False     |                     | Name of the module repository.           |
+
+
+**`Merge-Path`**
+
+Takes one or more strings as an array and merges them into a single path
+with the help of [System.IO.Path]::Combine().
+
+Same result can be achieved with Join-Path in PS 6.0 and above, but this
+lets us be backwards compatible.
+
+| Param  | Type     | Mandatory | Allowed Values      |                                  |
+|--------|----------|-----------|---------------------|----------------------------------|
+| `Path` | *String* | True      |                     | Array of paths/strings to merge. |
+
+
+## Usage Examples
 
 **New-PSModule**
 
@@ -242,7 +270,7 @@ helper functions that your `Public` functions uses. The `.psm1` file act as a lo
 
 **New-PSPesterTest**
 
-To create a new Pester tes for a function (can of course be done manually, or through your IDE if it supports extension):
+To create a new Pester test for a function (can of course be done manually, or through your IDE if it supports extension):
 
 ```
 cd ~\Documents\Projects\ExistingModule

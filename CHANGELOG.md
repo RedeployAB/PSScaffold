@@ -1,5 +1,12 @@
 # Changelog
 
+### v2.1.0
+
+Some major bugfixes for making the module more compatible with more operating systems (MacOS, Linux).
+
+* Functions have received a overhaul for checking module path (OS agnostic).
+* Functions have received overhauls regarding path checking (OS agnostic) for files and output.
+
 ### v2.0.0
 
 * Module has been tested and confirmed to work with PowerShell 6.1.0 along side PowerShell for Windows.
