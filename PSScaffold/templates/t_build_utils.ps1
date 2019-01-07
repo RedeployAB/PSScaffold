@@ -92,7 +92,7 @@ function Publish-PSModule {
         Write-Verbose ("Publishing Module: {0}." -f `$ModuleName)
 
         `$publishParams = @{
-            Path = ".\`$ModuleName"
+            Path = (Join-Path "." `$ModuleName)
         }
         # Determine type of publish.
         if (`$RepositoryName -eq `$psGalleryName) {

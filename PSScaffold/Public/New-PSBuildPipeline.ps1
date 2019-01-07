@@ -24,38 +24,21 @@ function New-PSBuildPipeline {
 
     begin {
         # Import templates from variables.
-        . "$PSScriptRoot\..\templates\t_build.ps1"
-        . "$PSScriptRoot\..\templates\t_build_settings.ps1"
-        . "$PSScriptRoot\..\templates\t_build_utils.ps1"
-        . "$PSScriptRoot\..\templates\t_gitignore.ps1"
+        $TemplatesPath = Merge-Path $PSScriptRoot, "..", "templates"
+        . (Merge-Path $TemplatesPath, "t_build.ps1")
+        . (Merge-Path $TemplatesPath, "t_build_settings.ps1")
+        . (Merge-Path $TemplatesPath, "t_build_utils.ps1")
+        . (Merge-Path $TemplatesPath, "t_gitignore.ps1")
     }
 
     process {
-        $modulePath = $null
-
-        # Determine if a path was used as Module.
-        if ($Module.Contains("\")) {
-            if (!(Test-Path $Module)) {
-                throw "A module with that path does not exist."
-            }
-            $modulePath = $Module.Trim("\")
-        } else {
-
-            if ($Module -eq ".") {
-                $path = (Resolve-Path $Module).Path
-            } else {
-                $path = (Get-Location).Path
-            }
-
-            $modulePath = $path 
-        }
-
+        $modulePath = Get-ModulePath -Path $Module
         $moduleName = Split-Path $modulePath -Leaf
 
-        $buildFilePath = Join-Path $modulePath "$moduleName.build.ps1"
-        $buildSettingsFilePath = Join-Path $modulePath "$moduleName.settings.ps1"
-        $buildUtilsFilePath = Join-Path $modulePath "build_utils.ps1"
-        $gitIgnoreFilePath = Join-Path $modulePath ".gitignore"
+        $buildFilePath = Merge-Path $modulePath, "$moduleName.build.ps1"
+        $buildSettingsFilePath = Merge-Path $modulePath, "$moduleName.settings.ps1"
+        $buildUtilsFilePath = Merge-Path $modulePath, "build_utils.ps1"
+        $gitIgnoreFilePath = Merge-Path $modulePath, ".gitignore"
 
         Write-Verbose "Creating build file."
         [void](New-Item -Path $buildFilePath -ItemType File)

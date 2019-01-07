@@ -1,11 +1,12 @@
 $PesterFileContent = @"
-`$here = (Split-Path -Parent `$MyInvocation.MyCommand.Path).Replace("Tests\<scope>","<module>\<scope>")
+`$here = (Split-Path -Parent `$MyInvocation.MyCommand.Path).Replace((Join-Path "Tests" <scope>), (Join-Path <module> <scope>))
 `$sut = (Split-Path -Leaf `$MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 
-. "`$here\`$sut"
+. (Join-Path `$here `$sut)
 
 # To make test runable from project root, and from test directory itself. Do quick validation.
-if ((Get-Location).Path -match "\\Tests\\<scope>") {
+`$testsPath = Join-Path "Tests" "<scope>"
+if ((Get-Location).Path -match "`$testsPath") {
     `$psmPath = (Resolve-Path "..\..\<module>\<module>.psm1").Path    
 } else {
     `$psmPath = (Resolve-Path ".\<module>\<module>.psm1").Path

@@ -76,7 +76,7 @@ task Publish {
         RepositoryName = `$Settings.SMBRepositoryName
         RepositoryPath = `$Settings.SMBRepositoryPath
         ModuleName = `$ModuleName
-        ModulePath = "`$ModulePath\`$ModuleName.psd1"
+        ModulePath = (Join-Path `$ModulePath "`$ModuleName.psd1")
         BuildNumber = `$BuildNumber
     }
 
@@ -86,7 +86,7 @@ task Publish {
 task PublishLocal {
 
     `$moduleInfo = @{
-        Path = "`$ModulePath\`$ModuleName.psd1"
+        Path = (Join-Path `$ModulePath "`$ModuleName.psd1")
         Repository = '<LocalRepository>'
     }
 

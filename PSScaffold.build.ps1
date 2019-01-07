@@ -74,7 +74,7 @@ task Publish {
     $moduleInfo = @{
         RepositoryName = 'PSGallery'
         ModuleName = $ModuleName
-        ModulePath = "$ModulePath\$ModuleName.psd1"
+        ModulePath = (Join-Path $ModulePath "$ModuleName.psd1")
         ApiKey = $Settings.ApiKey
         BuildNumber = $BuildNumber
     }
@@ -85,7 +85,7 @@ task Publish {
 task PublishLocal {
 
     $moduleInfo = @{
-        Path = "$ModulePath\$ModuleName.psd1"
+        Path = (Join-Path $ModulePath "$ModuleName.psd1")
         Repository = 'LocalRepository'
     }
 

@@ -51,17 +51,20 @@ function New-PSModule {
 
     begin {
         # Import templates from variables.
-        . "$PSScriptRoot\..\templates\t_module.ps1"
-        . "$PSScriptRoot\..\templates\t_help.ps1"
-        . "$PSScriptRoot\..\templates\t_readme.ps1"
+        $TemplatesPath = Merge-Path $PSScriptRoot, "..", "templates"
+        . (Merge-Path $TemplatesPath, "t_module.ps1")
+        . (Merge-Path $TemplatesPath, "t_help.ps1")
+        . (Merge-Path $TemplatesPath, "t_readme.ps1")
 
-        # Handle the path of the module.
+        # Handle the path to the module.
+        $sep = ([IO.Path]::DirectorySeparatorChar)
+
         if ([string]::IsNullOrEmpty($Path)) {
             $Path = (Get-Location).Path
         } elseif ($Path -eq ".") {
             $Path = (Resolve-Path ".").Path
         } else {
-            $Path = $Path.Trim("\")
+            $Path = $Path.TrimEnd($sep)
         }
     }
     #>
@@ -69,41 +72,56 @@ function New-PSModule {
         # Create directories for the project
         Write-Verbose "Creating directory structure."
 
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\Private")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\Public")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\$Name\en-US")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests\Private")
-        [void](New-Item -ItemType Directory -Path "$Path\$Name\Tests\Public")
+        $ProjectPath = Merge-Path $Path, $Name
+        $ModulePath = Merge-Path $ProjectPath, $Name
+        $TestsPath = Merge-Path $ProjectPath, "Tests"
+        $Locale = "en-US"
 
+        [void](New-Item -ItemType Directory -Path (Merge-Path $ModulePath))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $ModulePath, "Private"))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $ModulePath, "Public"))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $ModulePath, $Locale))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $TestsPath))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $TestsPath, "Private"))
+        [void](New-Item -ItemType Directory -Path (Merge-Path $TestsPath, "Public"))
+
+        # Create files for the project
         Write-Verbose "Creating module project files."
-        
-        [void](New-Item "$Path\$Name\$Name\$Name.psm1" -ItemType File)
-        [void](New-Item "$Path\$Name\$Name\en-US\about_$Name.help.txt" -ItemType File)      
 
-        $moduleParams = @{
-            Path = "$Path\$Name\$Name\$Name.psd1"
-            RootModule = "$Name.psm1"
+        $ModuleFileName = "$Name.psm1"
+        $ModuleFilePath = Merge-Path $ModulePath, $ModuleFileName
+        $ManifestFileName = "$Name.psd1"
+        $ManifestFilePath = Merge-Path $ModulePath, $ManifestFileName
+        $HelpFileName = "about_$Name.help.txt"
+        $HelpFilePath = Merge-Path $ModulePath, $Locale, $HelpFileName
+        $ReadmeName = "README.md"
+        $ReadmePath = Merge-Path $ProjectPath, $ReadmeName
+        
+        [void](New-Item $ModuleFilePath -ItemType File)
+        [void](New-Item (Merge-Path $ModulePath, $Locale, $HelpFileName) -ItemType File)      
+
+        $getModuleParams = @{
+            Path = $ManifestFilePath
+            RootModule = $ModuleFileName
             Description = $Description
             PowerShellVersion = "3.0"
             Author = $Author
             ModuleVersion = "0.1.0"
         }
 
-        New-ModuleManifest @moduleParams
+        New-ModuleManifest @getModuleParams
 
         Write-Verbose "Creating module script file."
-        $ModuleFileContent | Out-File "$Path\$Name\$Name\$Name.psm1" -Encoding utf8
+        $ModuleFileContent | Out-File $ModuleFilePath -Encoding utf8
 
         Write-Verbose "Creating help file."
-        $HelpFileContent -replace "<module>", "$Name" | Out-File "$Path\$Name\$Name\en-US\about_$Name.help.txt" -Encoding utf8
+        $HelpFileContent -replace "<module>", "$Name" | Out-File $HelpFilePath -Encoding utf8
 
-        Write-Verbose "Creating README.md file."
-        $ReadmeContent -replace "<module>", "$Name" | Out-File "$Path\$Name\README.md" -Encoding utf8 
+        Write-Verbose "Creating $ReadmeName file."
+        $ReadmeContent -replace "<module>", "$Name" | Out-File $ReadmePath -Encoding utf8 
 
         if ($BuildPipeline) {
-            New-PSBuildPipeline -Module "$Path\$Name"
+            New-PSBuildPipeline -Module $ProjectPath
         }
     }
 }

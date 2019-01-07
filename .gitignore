@@ -1,6 +1,8 @@
 Thumbs.db
 Desktop.ini
 
+.vscode/
+
 artifacts
 artifacts/*
 PSTestReport

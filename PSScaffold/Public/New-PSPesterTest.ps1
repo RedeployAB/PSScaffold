@@ -44,29 +44,14 @@ function New-PSPesterTest {
 
     process {
 
-        . "$PSScriptRoot\..\templates\t_pestertest.ps1"
+        $TemplatesPath = Merge-Path $PSScriptRoot, "..", "templates"
+        . (Merge-Path $TemplatesPath, "t_pestertest.ps1")
 
-        $modulePath = $null 
-
-        if ($Module.Contains("\")) {
-            if (!(Test-Path $Module)) {
-                throw "A module with that path does not exist."
-            }
-            $modulePath = $Module.Trim("\")
-        } else {
-
-            if ($Module -eq ".") {
-                $path = (Resolve-Path $Module).Path
-            } else {
-                $path = (Get-Location).Path
-            }
-
-            $modulePath = $path 
-        }
+        $modulePath = Get-ModulePath -Path $Module
+        $moduleName = Split-Path $modulePath -Leaf
         
         $fileName = $Name + ".Tests.ps1"
-        $filePath = $modulePath + "\Tests\$Scope\$fileName"
-        $moduleName = Split-Path $modulePath -Leaf
+        $filePath = Merge-Path $modulePath, "Tests", $Scope, $fileName
 
         Write-Verbose "Creating test file template..."
         $PesterFileContent -replace "<module>", "$moduleName" -replace "<scope>","$Scope" -replace "<name>", "$Name" | 

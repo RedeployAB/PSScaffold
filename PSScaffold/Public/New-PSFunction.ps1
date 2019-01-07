@@ -40,36 +40,21 @@ function New-PSFunction {
 
     process {
 
-        . "$PSScriptRoot\..\templates\t_function.ps1"
+        $TemplatesPath = Merge-Path $PSScriptRoot, "..", "templates"
+        . (Merge-Path $TemplatesPath, "t_function.ps1")
 
-        $modulePath = $null 
-
-        if ($Module.Contains("\")) {
-            if (!(Test-Path $Module)) {
-                throw "A module with that path does not exist."
-            }
-            $modulePath = $Module.Trim("\") + "\" + (Split-Path $Module -Leaf)
-        } else {
-
-            if ($Module -eq ".") {
-                $path = (Resolve-Path $Module).Path
-            } else {
-                $path = (Get-Location).Path
-            }
-
-            $moduleName = Split-Path $path -Leaf
-            $modulePath = Join-Path $path $moduleName 
-        }
+        $modulePath = Get-ModulePath -Path $Module
+        $moduleName = Split-Path $modulePath -Leaf
 
         $fileName = $Name + ".ps1"
-        $filePath = Join-Path $modulePath "$Scope\$fileName"
+        $filePath = Merge-Path $modulePath, $moduleName, $Scope, $fileName
 
         Write-Verbose "Creating function template..."
         $FunctionFileContent -replace "<name>", "$Name" | Out-File $filePath -Encoding utf8
         Write-Verbose "Function template is done."
 
         if ($PesterTest) {
-            New-PSPesterTest -Module (Split-Path $modulePath -Parent) -Name $Name -Scope $Scope
+            New-PSPesterTest -Module $modulePath -Name $Name -Scope $Scope
         }
     }
 }

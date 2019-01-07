@@ -1,7 +1,7 @@
-$here = (Split-Path -Parent $MyInvocation.MyCommand.Path).Replace("Tests\Public","PSScaffold\Public")
+$here = (Split-Path -Parent $MyInvocation.MyCommand.Path).Replace((Join-Path "Tests" "Public"), (Join-Path "PSScaffold" "Public"))
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 
-. "$here\$sut"
+. (Join-Path $here $sut)
 
 Import-Module (Resolve-Path .\PSScaffold\PSScaffold.psm1) -Force -NoClobber
 
@@ -11,10 +11,12 @@ InModuleScope "PSScaffold" {
 
         Mock Register-PSRepository { }
 
-        $testPath = "$env:TEMP\TestModules"
+        $testPath = (Merge-Path ([IO.Path]::GetTempPath()), "ModuleFolder")
+        $testName = "TestModule"
+        $testModulePath = (Merge-Path $testPath, $testName, $testName)
         New-Item -ItemType Directory -Path $testPath
 
-        New-PSModule -Name TestModule -Path "$testPath" -Author 'Test' -Description 'Test'
+        New-PSModule -Name $testName -Path $testPath -Author 'Test' -Description 'Test'
 
         It "Should publish the module to a repository." {
 
@@ -31,8 +33,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -54,14 +56,14 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
             { Publish-PSModule @publishParams } | Should Not throw
 
-            $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
+            $moduleVersion = (Get-Content (Merge-Path $testModulePath, "TestModule.psd1") | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
 
             $moduleVersion | Should Be "0.1.1"
         }
@@ -81,8 +83,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
                 Properties = @{
                     ReleaseNotes = "Release Notes."
@@ -95,7 +97,7 @@ InModuleScope "PSScaffold" {
 
             { Publish-PSModule @publishParams } | Should Not throw
 
-            $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
+            $moduleVersion = (Get-Content (Merge-Path $testModulePath, "TestModule.psd1") | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
 
             $moduleVersion | Should Be "0.1.1"
         }
@@ -115,8 +117,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
                 Properties = @{
                     Tags = 'Tag1,Tag2'
@@ -125,7 +127,7 @@ InModuleScope "PSScaffold" {
 
             { Publish-PSModule @publishParams } | Should Not throw
 
-            $moduleVersion = (Get-Content "$testPath\TestModule\TestModule\TestModule.psd1" | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
+            $moduleVersion = (Get-Content (Merge-Path $testModulePath, "TestModule.psd1") | select-string ".*ModuleVersion.*") -replace "\s" -replace "\w*=" -replace "'"
 
             $moduleVersion | Should Be "0.1.1"
         }
@@ -144,8 +146,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'PSGallery'
                 ApiKey = "ABCDEFGH"
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -165,8 +167,8 @@ InModuleScope "PSScaffold" {
 
             $publishParams = @{
                 RepositoryName = 'PSGallery'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -185,8 +187,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -205,8 +207,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -229,8 +231,8 @@ InModuleScope "PSScaffold" {
             $publishParams = @{
                 RepositoryName = 'TestRepo'
                 RepositoryPath = '\\path\to\repo'
-                ModuleName = 'TestModule'
-                ModulePath = "$testPath\TestModule\TestModule\TestModule.psd1"
+                ModuleName = $testName
+                ModulePath = (Merge-Path $testModulePath, "TestModule.psd1")
                 BuildNumber = 1
             }
 
@@ -241,3 +243,5 @@ InModuleScope "PSScaffold" {
     }
 
 }
+
+Remove-Module PSScaffold -Force
