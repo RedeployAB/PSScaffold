@@ -6,7 +6,7 @@ $PesterFileContent = @"
 
 # To make test runable from project root, and from test directory itself. Do quick validation.
 `$testsPath = Join-Path "Tests" "<scope>"
-if ((Get-Location).Path -match "`$testsPath") {
+if ((Get-Location).Path -match [Regex]::Escape(`$testsPath)) {
     `$psmPath = (Resolve-Path "..\..\<module>\<module>.psm1").Path    
 } else {
     `$psmPath = (Resolve-Path ".\<module>\<module>.psm1").Path
